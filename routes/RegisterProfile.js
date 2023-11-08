@@ -2,48 +2,47 @@ const Natural = require('../models/Natural');
 const Juridico = require('../models/Juridico');
 const Espacio = require('../models/Espacio');
 const Gestor = require('../models/Gestor');
-const multer = require('multer');
+const { uploadEspacio, uploadNatural, uploadJuridico, uploadGestor } = require('../config/multerConfig');
 
-    // Configuración de multer
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, './uploads/');
-    },
-    filename: function (req, file, cb) {
-        cb(null, file.originalname);
-    },
-});
-
-const upload = multer({ storage: storage });
 
 // Rutas para registro de usuarios
 const RegisterProfile = {
 
-    juridico: upload.fields([{ name: 'imgRuc' }, { name: 'imgDir' }], async (req, res) => {
-        const { body, files } = req; 
+    juridico: async (req, res) => {
+
+        const storageJuridico = uploadJuridico;
 
         try {
-            const juridico = await Juridico.create({
-                userId: body.userId,
-                nombreComercial: body.nombreComercial,
-                nombreRepresentante: body.nombreRepresentante,
-                apellidoRepresentante: body.apellidoRepresentante,
-                direccion: body.direccion,
-                provincia: body.provincia,
-                ciudad: body.ciudad,
-                celular: body.celular,
-                telefono: body.telefono,
-                imgDir: files.imgDir[0].filename,
-                imgRuc: files.imgRuc[0].filename,
-            });
+            const [ imgDir, imgRuc ] = await storageJuridico.array(req, res);
 
-            res.status(200).send('jurídico creado');
+            if(!imgDir || !imgRuc) {
+                return res.status(400).send('error al subir archivos');
+            }
+
+            const juridicoData = {
+                userId: req.body.userId,
+                nombreComercial: req.body.nombreComercial,
+                nombreRepresentante: req.body.nombreRepresentante,
+                apellidoRepresentante: req.body.apellidoRepresentante,
+                direccion: req.body.direccion,
+                provincia: req.body.provincia,
+                ciudad: req.body.ciudad,
+                celular: req.body.celular,
+                telefono: req.body.telefono,
+                imgDir: imgDir[0].filename,
+                imgRuc: imgRuc[0].filename,
+            };
+
+            const juridico = await Juridico.create(juridicoData);
+
+            res.status(200).send('Juridico creado');
 
         } catch (err) {
             console.error(err);
-            res.status(500).send(err.message);
+            return res.status(500).send('error en la carga de archivos');
         }
-    }),
+
+    },
 
     natural: async(req, res) => {
         const { body } = req;
@@ -57,8 +56,8 @@ const RegisterProfile = {
                 ciudad: body.ciudad,
                 celular: body.celular,
                 telefono: body.telefono,
-                perfilProfesiona: body.perfilProfesiona,
-                urlUbicacion: body.urlUbicacion
+                perfilProfesional: body.perfilProfesional,
+                imgDir: body.imgDir
             });
             res.status(200).send('persona natural creada');
 
@@ -80,7 +79,7 @@ const RegisterProfile = {
                 mailResponsable: body.mailResponsable,
                 tipoDeEspacio: body.tipoDeEspacio,
                 direccionEspacio: body.direccionEspacio,
-                provincial: body.provincia,
+                provincia: body.provincia,
                 ciudad: body.ciudad,
                 descripcion: body.descripcion,
                 aforo: body.aforo,
@@ -89,9 +88,12 @@ const RegisterProfile = {
                 equipoAudio: body.equipoAudio,
                 otrosServicios: body.otrosServicios,
                 publicoPrivado: body.publicoPrivado,
-                urlFotosEspacio: body.urlFotosEspacio,
-                urlLogo: body.urlLogo,
-                urlNombramientoAutorizacion: body.urlNombramientoAutorizacion
+                imgLogo: body.imgLogo,
+                fotoEspacio1: body.fotoEspacio1,
+                fotoEspacio2: body.fotoEspacio2,
+                fotoEspacio3: body.fotoEspacio3,
+                imgAutorizacion: body.imgAutorizacion,
+                
             })
             res.status(200).send('espacio creado');
 
@@ -107,8 +109,8 @@ const RegisterProfile = {
             const gestor = Gestor.create({
                 userId: body.userId,
                 proyecto: body.proyecto,
-                urlAutorizacion: body.urlAutorizacion,
-                urlFotoLogo: body.urlFotoLogo,
+                imgAutorizacion: body.imgAutorizacion,
+                imgFotoLogo: body.imgFotoLogo,
             });
             res.status(200).send('gestor creado');
 
