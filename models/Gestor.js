@@ -5,11 +5,12 @@ const Gestor = mongoose.model( 'Gestor', {
     proyecto: {type: String, require: true},
     validProyecto: {type: Boolean, require: true, default: false},
     urlAutorizacion: {type: String, require: true},
-    validProyecto: {type: Boolean, require: true, default: false},
+    validurlAutorizacion: {type: Boolean, require: true, default: false},
     urlFotoLogo: {type: String, require: true},
-    validProyecto: {type: Boolean, require: true, default: false},
+    validurlFotoLogo: {type: Boolean, require: true, default: false},
     commentValidation: {type: String, require: true, default: 'sin validar'},
+    acuerdo: {type: Boolean, require: true, default: false},
     createdAt: {type: Date, require: true, default: new Date()}
 })
 
-module.exports = require('Gestor');
+module.exports = Gestor;

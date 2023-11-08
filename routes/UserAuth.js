@@ -70,7 +70,7 @@ const UserAuth = {
             const isMatch = await bcrypt.compare(body.password, userData.password);
             if(isMatch) {
                 const signed = signToken(userData._id);
-                res.status(200).json({userData, signed});
+                res.status(200).json({ userData, signed});
             } else {
                 res.status(403).send('usuario y/o password incorrecto');
             }
@@ -80,6 +80,23 @@ const UserAuth = {
             res.status(500).send(err.message);
         }
     },
-}
 
+    getUser: async(req, res) => {
+        const id = req.userId;
+        
+        try {
+            const user = await Users.findOne({ _id: id });
+    
+            if (!user) {
+                return res.status(401).send('usuario no encontrado');
+            }
+            res.json(user);
+        
+        } catch (err) {
+            console.err(err);
+            res.status(500).send(err.message)
+        }
+    }
+
+}
 module.exports = UserAuth;

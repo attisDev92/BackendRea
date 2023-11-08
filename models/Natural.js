@@ -20,7 +20,7 @@ const Natural = mongoose.model( 'Natural', {
     valid: {type: Boolean, require: true, default: false},
     urlUbicacion: {type: String, require: true},
     valid: {type: Boolean, require: true, default: false},
-    commentValidation: {type: String, require: true, default: ''}
+    commentValidation: {type: String, require: true, default: 'sin validar'},
     createdAt: {type: Date, require:true, default: new Date()}
 });
 

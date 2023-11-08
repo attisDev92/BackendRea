@@ -18,9 +18,9 @@ const Juridico = mongoose.model( 'Juridico', {
     validCelular: {type: Boolean, require: true, default: false},
     telefono: {type: Number, require: true},
     validTelefono: {type: Boolean, require: true, default: false},
-    urlUbicacion: {type: String, require: true},
+    imgDir: {type: String, require: true},
     validUrlUbicacion: {type: Boolean, require: true, default: false},
-    urlRUC: {type: String, require: true},
+    imgRuc: {type: String, require: true},
     validRUC: {type: Boolean, require: true, default: false},
     validationComment: {type:String, default: 'sin validar'},
     createdAt: {type: Date, require:true, default: new Date()}

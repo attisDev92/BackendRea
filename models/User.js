@@ -11,7 +11,7 @@ const User = mongoose.model( 'User', {
     espacio: {type: Boolean, require:true, default: false},
     gestor: {type: Boolean, require:true, default: false},
     aut_code: {type: String, require: true},
-    auth: {type:Boolean, require:true, default: false},
+    auth: {type:Boolean, require:true, default: true},
     createdAt: {type: Date, require:true, default: new Date()}
 });
 

@@ -1,15 +1,48 @@
 const mongoose = require('mongoose');
 
-const Gestor = mongoose.model( 'Gestor', {
+const Espacio = mongoose.model( 'Espacio', {
     userId: {type: String, require: true},
-    proyecto: {type: String, require: true},
-    validProyecto: {type: Boolean, require: true, default: false},
-    urlAutorizacion: {type: String, require: true},
-    validUrlAutorizacion: {type: Boolean, require: true, default: false},
-    urlFotoLogo: {type: String, require: true},
-    validFotoLog: {type: Boolean, require: true, default: false},
+    nombreEspacio: {type: String, require:true},
+    validNombreEspacio: {type: Boolean, require: true, default: false},
+    nombreResponsable: {type: String, require: true},
+    validNombreResponsable: {type: Boolean, require: true, default: false},
+    cargoResponsable: {type: String, require: true},
+    validCargoResponsable: {type: Boolean, require: true, default: false},    
+    celularResponsable: {type: String, require: true},
+    validCelularResponsable: {type: Boolean, require: true, default: false},    
+    mailResponsable: {type: String, require: true},
+    validMailResponsable: {type: Boolean, require: true, default: false},    
+    tipoDeEspacio: {type: String, require: true},
+    validTipoDeEspacio: {type: Boolean, require: true, default: false},    
+    direccionEspacio: {type: String, require: true},
+    validDireccionEspacio: {type: Boolean, require: true, default: false},    
+    provincial: {type: String, require: true},
+    validProvincial: {type: Boolean, require: true, default: false},    
+    ciudad: {type: String, require: true},
+    validCiudad: {type: Boolean, require: true, default: false},    
+    descripcion: {type: String, require: true},
+    validDescripcion: {type: Boolean, require: true, default: false},    
+    aforo: {type: String, require: true},
+    validAforo: {type: Boolean, require: true, default: false},    
+    equipoProyeccion: {type: String, require: true},
+    validEquipoProyeccion: {type: Boolean, require: true, default: false},    
+    tipoDeReproductor: {type: String, require: true},
+    validTipoDeReproductor: {type: Boolean, require: true, default: false},    
+    equipoAudio: {type: String, require: true},
+    validEquipoAudio: {type: Boolean, require: true, default: false},    
+    otrosServicios: {type: String, require: true},
+    validOtrosServicios: {type: Boolean, require: true, default: false},    
+    publicoPrivado: {type: String, require: true},
+    validPublicoPrivado: {type: Boolean, require: true, default: false},    
+    urlFotosEspacio: {type: String, require: true},
+    validurlFotosEspacio: {type: Boolean, require: true, default: false},
+    urlLogo: {type: String, require: true},
+    validurlLogo: {type: Boolean, require: true, default: false},    
+    urlNombramientoAutorizacion: {type: String, require: true},
+    validurlNombramientoAutorizacion: {type: Boolean, require: true, default: false},    
     commentValidation: {type: String, require: true, default: 'sin validar'},
     createdAt: {type: Date, require: true, default: new Date()}
 })
 
-module.exports = require('Gestor');
+module.exports = Espacio;
+
