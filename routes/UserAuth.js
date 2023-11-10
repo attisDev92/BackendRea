@@ -66,18 +66,23 @@ const UserAuth = {
 
         try {
             const userData = await Users.findOne({ user: body.user });
-            if(!userData) res.status(403).send('usuario y/o password incorrecto');
+
+            if(!userData) {
+                return res.status(403).send('usuario y/o password incorrecto');
+            }
+
             const isMatch = await bcrypt.compare(body.password, userData.password);
+
             if(isMatch) {
                 const signed = signToken(userData._id);
-                res.status(200).json({ userData, signed});
+                return res.status(200).json({ userData, signed});
             } else {
-                res.status(403).send('usuario y/o password incorrecto');
+                return res.status(403).send('usuario y/o password incorrecto');
             }
         
         } catch (err) {
-            console.log(err);
-            res.status(500).send(err.message);
+            console.error(err);
+            return res.status(500).send(err.message);
         }
     },
 
@@ -90,10 +95,11 @@ const UserAuth = {
             if (!user) {
                 return res.status(401).send('usuario no encontrado');
             }
-            res.json(user);
+
+            res.status(200).json(user);
         
         } catch (err) {
-            console.err(err);
+            console.error(err);
             res.status(500).send(err.message)
         }
     }

@@ -9,6 +9,8 @@ const Gestor = mongoose.model( 'Gestor', {
     imgFotoLogo: {type: String, require: true},
     validImgFotoLogo: {type: Boolean, require: true, default: false},
     commentValidation: {type: String, require: true, default: 'sin validar'},
+    correctProfile: {type: Boolean, require: true, default: false},
+    validationProfile: {type: Boolean, require: true, default: false},
     acuerdo: {type: Boolean, require: true, default: false},
     createdAt: {type: Date, require: true, default: new Date()}
 })
