@@ -36,7 +36,7 @@ const Espacio = mongoose.model( 'Espacio', {
     correctProfile: {type: Boolean, require: true, default: false},
     validationProfile: {type: Boolean, require: true, default: false},
     createdAt: {type: Date, require: true, default: new Date()}
-})
+});
 
 module.exports = Espacio;
 

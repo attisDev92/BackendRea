@@ -7,7 +7,7 @@ const Natural = mongoose.model( 'Natural', {
     direccion: {type: String, require:true},
     provincia: {type: String, require:true},
     ciudad: {type: String, require: true},
-    telefono: {type: Number, require: true},
+    telefono: {type: String, require: true},
     validTelefono: {type: Boolean, require: true, default: false},
     perfilProfesional: {type: String, require: true},
     validPerfilProfesional: {type: Boolean, require: true, default: false},
