@@ -87,7 +87,7 @@ const UserAuth = {
     },
 
     getUser: async(req, res) => {
-        const id = req.userId;
+        const id = req.id;
         
         try {
             const user = await Users.findOne({ _id: id });

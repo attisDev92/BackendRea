@@ -14,7 +14,7 @@ const verifyToken = async (req, res, next) => {
         const verified = await verify(token, process.env.VERIFYSTRING);
         req.user = verified;
         const decoded = decode(token);
-        req.userId = decoded._id;
+        req.id = decoded._id;
         next();
     } catch (err) {
         res.status(400).json({ error: "Token no válido" });

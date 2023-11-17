@@ -18,7 +18,7 @@ const User = mongoose.model( 'User', {
     natural: {type: Boolean, require: true, default: false},
     naturalData: {type: Object, require: true, default: null},
     espacio : {type: Boolean, require: true, default: false},
-    espaciosData: {type: Object, require: true, default: null},
+    espaciosData: {type: Array, require: true, default: null},
     gestor : {type: Boolean, require: true, default: false},
     gestorData: {type: Object, require: true, default: null},
     authenticate_code: {type: String, require: true, default:null},

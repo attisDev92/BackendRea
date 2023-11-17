@@ -5,29 +5,28 @@ const { uploadJuridico, uploadNatural, uploadEspacio, uploadGestor } = require('
 const RegisterProfile = {
 
     juridico: async(req, res) => {
-        
-        const user = await User.findOne({ _id: req.body.userId });
+
+        const user = await User.findOne({ _id: req.user._id });
+
         if(user.juridicoData) {
             return res.status(403).send('ya se encuentra registrado como usuario juridico')
         }
 
         uploadJuridico (req, res, async (err) => {
 
-            const body = req.body;
-
             if (err) {
                 console.error(err);
                 return res.status(500).send('Error al subir imágenes');
             }
+
+            const { body } = req;
             
             try {
-                const user = await User.findOne({ _id: req.body.userId })
-
-                user.nombre = req.body.nombreRepresentante;
+                user.nombre = body.nombreRepresentante;
                 user.validNombre = false;
                 user.apellido = body.apellidoRepresentante;
                 user.validApellido = false;
-                user.nombreComercial = body.nombreComercial
+                user.nombreComercial = body.nombreComercial;
                 user.validNombreComercial = false;
                 user.direccion = body.direccion;
                 user.validDireccion = false;
@@ -60,7 +59,7 @@ const RegisterProfile = {
 
     natural: async(req, res) => {
 
-        const user = await User.findOne({ _id: req.body.userId });
+        const user = await User.findOne({ _id: req.user._id });
 
         if(user.naturalData){
             return res.status(403).send('ya se encuentra registradocomo persona natural');
@@ -68,17 +67,15 @@ const RegisterProfile = {
 
         uploadNatural(req, res, async (err) => {
 
-            const body = req.body
-
             if(err) {
                 console.error(err);
                 return res.status(500).send('Error al subir imágenes');
             }
 
-            const user = await User.findOne({ _id: body.userId })
+            const { body } = req;
 
             try {
-                user.nombre = req.body.nombreRepresentante;
+                user.nombre = body.nombreRepresentante;
                 user.validNombre = false;
                 user.apellido = body.apellidoRepresentante;
                 user.validApellido = false;
@@ -120,49 +117,56 @@ const RegisterProfile = {
                 console.error(err);
                 return res.status(500).send('Error al subir imágenes');
             }
-            
-            const body = req.body;
 
-            const user = await User.findOne({ _id: body.userId })
+            console.log(req)
+
+            const user = await User.findOne({ _id: req.user._id })
+            
+            const  { body } = req;
 
             try {
                 
-                user.espacio = true;
-                user.nombreEspacio = body.nombreEspacio;
-                user.nombreResponsable = body.nombreResponsable;
-                user.cargoResponsable = body.cargoResponsable;
-                user.celularResponsable = body.celularResponsable;
-                user.validCelularResponsable = false;
-                user.mailResponsable = body.mailResponsable;
-                user.validMailResponsable = false;
-                user.tipoDeEspacio = body.tipoDeEspacio;
-                user.direccionEspacio = body.direccionEspacio;
-                user.provincia = body.provincia;
-                user.ciudad =  body.ciudad;
-                user.descripcion = body.descripcion;
-                user.validDescripcion = false;
-                user.aforo = body.aforo;
-                useer.validAforo = false;
-                user.equipoProyeccion = body.equipoProyeccion;
-                user.equipoReproductor = body.equipoReproductor;
-                user.equipoAudio = body.equipoAudio;
-                user.otrosServicios = body.otrosServicios;
-                user.publicoPrivado = body.publicoPrivado;
-                user.imgLogo =  req.files.imgLogo[0].filename;
-                user.validImgLogo = false;
-                user.fotoEspacio1 = req.files.fotoEspacio1[0].filename;
-                user.validFotoEspacio1 = false;
-                user.fotoEspacio2 = req.files.fotoEspacio2[0].filename;
-                user.validFotoEspacio2 = false;
-                user.fotoEspacio3 = req.files.fotoEspacio3[0].filename;
-                user.validFotoEspacio3 = false;
-                user.imgAutorizacion = req.files.imgAutorizacion[0].filename;
-                user.validImgAutorizacion = false;
-                user.commentValidation ='sin validar';
-                user.correctProfile = false;
-                user.validationProfile = false;
-                user.acuerdo = false;
-                user.createdAt = new Date();
+                user.espacio = true,
+                user.espaciosData = [ ...user.espaciosData, {
+                    nombreEspacio: body.nombreEspacio,
+                    validNombreEspacio: false,
+                    nombreResponsable: body.nombreResponsable,
+                    validNombreResponsable: false,
+                    cargoResponsable: body.cargoResponsable,
+                    validCargoResponsable: false,
+                    celularResponsable: body.celularResponsable,
+                    validCelularResponsable: false,
+                    mailResponsable: body.mailResponsable,
+                    validMailResponsable: false,
+                    tipoDeEspacio: body.tipoDeEspacio,
+                    direccionEspacio: body.direccionEspacio,
+                    provincia: body.provincia,
+                    ciudad:  body.ciudad,
+                    descripcion: body.descripcion,
+                    validDescripcion: false,
+                    aforo: body.aforo,
+                    validAforo: false,
+                    equipoProyeccion: body.equipoProyeccion,
+                    equipoReproductor: body.equipoReproductor,
+                    equipoAudio: body.equipoAudio,
+                    otrosServicios: body.otrosServicios,
+                    publicoPrivado: body.publicoPrivado,
+                    imgLogo:  req.files.imgLogo[0].filename,
+                    validImgLogo: false,
+                    fotoEspacio1: req.files.fotoEspacio1[0].filename,
+                    validFotoEspacio1: false,
+                    fotoEspacio2: req.files.fotoEspacio2[0].filename,
+                    validFotoEspacio2: false,
+                    fotoEspacio3: req.files.fotoEspacio3[0].filename,
+                    validFotoEspacio3: false,
+                    imgAutorizacion: req.files.imgAutorizacion[0].filename,
+                    validImgAutorizacion: false,
+                    commentValidation:'sin validar',
+                    correctProfile: false,
+                    validationProfile: false,
+                    acuerdo: false,
+                    createdAt: new Date(),
+                }]
                 
                 user.save();
 
@@ -177,9 +181,9 @@ const RegisterProfile = {
 
     gestor: async(req, res) => {
 
-        const user = User.findOne({ _id: req.body.userId });
+        const user = await User.findOne({ _id: req.user._id });
 
-        if(user.gestorData) {
+        if(user.gestorData !== null) {
             return res.status(403).send('ya se encuentra registrado como persona usuario del banco de contenidos');
         }
 
@@ -189,25 +193,24 @@ const RegisterProfile = {
                 console.error(err);
                 return res.status(500).send('Error al subir imágenes');
             }
-
-            const body = req.body;
-
+            
+            const { body } = req;
             try {
 
-                const user = await User.findOne({ _id: req.body.userId });
-
                 user.gestor = true;
-                user.proyecto = body.proyecto;
-                user.validProyecto = false;
-                user.imgAutorizacion = req.files.imgAutorizacion ? req.files.imgAutorizacion[0].filename : null;
-                user.validImgAutorizacion = false;
-                user.imgFotoLogo = req.files.imgFotoLogo[0].filename;
-                user.validImgFotoLogo = false;
-                user.commentValidation = 'sin validar';
-                user.correctProfile = false;
-                user.validationProfile = false;
-                user.acuerdo = false;
-                user.createdAt = new Date();
+                user.gestorData = {
+                    proyecto: body.proyecto,
+                    validProyecto: false,
+                    imgAutorizacion: req.files.imgAutorizacion ? req.files.imgAutorizacion[0].filename : null,
+                    validImgAutorizacion: false,
+                    imgFotoLogo: req.files.imgFotoLogo[0].filename,
+                    validImgFotoLogo: false,
+                    commentValidation: 'sin validar',
+                    correctProfile: false,
+                    validationProfile: false,
+                    acuerdo: false,
+                    createdAt: new Date(),
+                }
 
                 user.save();
                 
