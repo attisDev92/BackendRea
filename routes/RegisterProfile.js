@@ -75,11 +75,11 @@ const RegisterProfile = {
             const { body } = req;
 
             try {
-                user.nombre = body.nombreRepresentante;
+                user.nombre = body.nombre;
                 user.validNombre = false;
-                user.apellido = body.apellidoRepresentante;
+                user.apellido = body.apellido;
                 user.validApellido = false;
-                user.nombreComercial = body.nombreComercial
+                user.nombreComercial = null;
                 user.validNombreComercial = false;
                 user.direccion = body.direccion;
                 user.validDireccion = false;
