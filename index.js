@@ -7,7 +7,6 @@ const verifyToken = require('./middleweres/authenticated.middleware');
 //rutas
 const UserAuth = require('./routes/UserAuth');
 const RegisterProfile = require('./routes/RegisterProfile');
-const GetInformationUser = require('./routes/GetInformationUser');
 
 //configuracion
 const mongooseConnect = require('./config/database');
@@ -36,28 +35,16 @@ app.get('/api/login', verifyToken, UserAuth.getUser);
 app.patch('/api/authmail', UserAuth.authMail);
 
 //ruta de registro de nuevo juridico
-app.post('/api/registerJuridico', verifyToken, RegisterProfile.juridico);
+app.put('/api/registerJuridico', verifyToken, RegisterProfile.juridico);
 
 //ruta de registro de nueva persona natural
-app.post('/api/registerNatural', verifyToken, RegisterProfile.natural);
+app.put('/api/registerNatural', verifyToken, RegisterProfile.natural);
 
 //ruta de registro de nuevo espacio
-app.post('/api/registerEspacio', verifyToken, RegisterProfile.espacio);
+app.put('/api/registerEspacio', verifyToken, RegisterProfile.espacio);
 
 //ruta de registro de nuevo gestor
-app.post('/api/registerGestor', verifyToken, RegisterProfile.gestor);
-
-//obtener info juridico del user
-app.get('/api/juridico', verifyToken, GetInformationUser.getJuridico);
-
-//obtener info natural del user
-app.get('/api/natural', verifyToken, GetInformationUser.getNatural);
-
-//obtener datos de gestor del usuario
-app.get('/api/gestor', verifyToken, GetInformationUser.getGestor);
-
-//obtener datos de espacios del usuario
-app.get('/api/espacios', verifyToken, GetInformationUser.getEspacios);
+app.put('/api/registerGestor', verifyToken, RegisterProfile.gestor);
 
 //esuchar en el puerto
 const PORT = process.env.PORT;
