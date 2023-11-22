@@ -7,6 +7,7 @@ const verifyToken = require('./middleweres/authenticated.middleware');
 //rutas
 const UserAuth = require('./routes/UserAuth');
 const RegisterProfile = require('./routes/RegisterProfile');
+const UpdateUser = require('./routes/UpdatedUser');
 
 //configuracion
 const mongooseConnect = require('./config/database');
@@ -45,6 +46,15 @@ app.put('/api/registerEspacio', verifyToken, RegisterProfile.espacio);
 
 //ruta de registro de nuevo gestor
 app.put('/api/registerGestor', verifyToken, RegisterProfile.gestor);
+
+
+//ruta para actualizar información del usuario
+app.put('/api/updateProfileData', verifyToken, UpdateUser.updateProfileData);
+
+app.put('/api/updateEspacioData', verifyToken, UpdateUser.updateEspacioData);
+
+app.put('/api/updateGestorData', verifyToken, UpdateUser.updateGestorData);
+
 
 //esuchar en el puerto
 const PORT = process.env.PORT;

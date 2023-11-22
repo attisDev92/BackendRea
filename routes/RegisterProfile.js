@@ -1,5 +1,6 @@
 const User = require('../models/User');
 const { uploadJuridico, uploadNatural, uploadEspacio, uploadGestor } = require('../config/multer.config');
+const { v4: uuidv4 } = require('uuid');
 
 // Rutas para registro de usuarios
 const RegisterProfile = {
@@ -23,19 +24,12 @@ const RegisterProfile = {
             
             try {
                 user.nombre = body.nombreRepresentante;
-                user.validNombre = false;
                 user.apellido = body.apellidoRepresentante;
-                user.validApellido = false;
                 user.nombreComercial = body.nombreComercial;
-                user.validNombreComercial = false;
                 user.direccion = body.direccion;
-                user.validDireccion = false;
                 user.provincia = body.provincia;
-                user.validProvincia = false;
                 user.ciudad = body.ciudad;
-                user.validCiudad = false;
                 user.telefono = body.telefono;
-                user.validTelefono = false;
                 user.juridicoData = {
                     imgDir: req.files.imgDir[0].filename,
                     validImgDir: false,
@@ -76,22 +70,15 @@ const RegisterProfile = {
 
             try {
                 user.nombre = body.nombre;
-                user.validNombre = false;
                 user.apellido = body.apellido;
-                user.validApellido = false;
                 user.nombreComercial = null;
-                user.validNombreComercial = false;
                 user.direccion = body.direccion;
-                user.validDireccion = false;
                 user.provincia = body.provincia;
-                user.validProvincia = false;
                 user.ciudad = body.ciudad;
-                user.validCiudad = false;
                 user.telefono = body.telefono;
-                user.validTelefono = false;
+                user.perfilProfesional= body.perfilProfesional;
+                user.validPerfilProfesional= false;
                 user.naturalData = {
-                    perfilProfesional: body.perfilProfesional,
-                    validPerfilProfesional: false,
                     imgDir: req.files.imgDir[0].filename,
                     validImgDir: false,
                     commentValidation: 'sin validar',
@@ -128,6 +115,7 @@ const RegisterProfile = {
                 
                 user.espacio = true,
                 user.espaciosData = [ ...user.espaciosData, {
+                    id_espacio: uuidv4(),
                     nombreEspacio: body.nombreEspacio,
                     validNombreEspacio: false,
                     nombreResponsable: body.nombreResponsable,
@@ -199,6 +187,7 @@ const RegisterProfile = {
 
                 user.gestor = true;
                 user.gestorData = {
+                    id_gestor: uuidv4(),
                     proyecto: body.proyecto,
                     validProyecto: false,
                     imgAutorizacion: req.files.imgAutorizacion ? req.files.imgAutorizacion[0].filename : null,
